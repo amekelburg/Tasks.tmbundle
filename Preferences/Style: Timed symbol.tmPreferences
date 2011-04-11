@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>name</key>
+	<string>Style: Timed symbol</string>
+	<key>scope</key>
+	<string>meta.task.timed.tasks punctuation.definition.bullet</string>
+	<key>settings</key>
+	<dict>
+		<key>fontStyle</key>
+		<string>bold, underline</string>
+		<key>foreground</key>
+		<string>#000000</string>
+	</dict>
+	<key>uuid</key>
+	<string>7FF4054D-249F-4483-9E1C-8B8A86601FEC</string>
+</dict>
+</plist>

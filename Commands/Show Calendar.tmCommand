@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>#!/usr/bin/env ruby
+
+require 'date'
+
+doc = STDIN.read
+
+
+#look for headers that look like days
+
+headers = []
+cur_header_name = ''
+doc.each_line do |line|
+	if !line.strip.empty?
+		if line =~ /^(\s*)(.+)(:)\s*$/
+			cur_header_name = $2
+     		headers &lt;&lt; {:name=&gt;cur_header_name, :tasks =&gt; []}
+		elsif headers.last &amp;&amp; headers.last[:tasks]
+			headers.last[:tasks] &lt;&lt; line if !line.strip.empty?
+		end
+	end
+end
+
+
+print "&lt;h1&gt;#{Date.today.strftime("%b %d, %Y")}&lt;/h1&gt;"
+
+headers.each do |h|
+  if h[:name] =~ /(sun|mon|tues|wednes|thurs|fri|satur)(day)?/i
+	print "&lt;h2&gt;#{h[:name]}&lt;/h2&gt;"
+	print "&lt;ul&gt;"
+	h[:tasks].each do |t|
+		print "&lt;li&gt;#{t}&lt;/li&gt;"
+	end
+	print "&lt;/ul&gt;"
+  end
+end
+</string>
+	<key>input</key>
+	<string>document</string>
+	<key>keyEquivalent</key>
+	<string>^~@p</string>
+	<key>name</key>
+	<string>Show Calendar</string>
+	<key>output</key>
+	<string>showAsHTML</string>
+	<key>scope</key>
+	<string>text.plain.tasks</string>
+	<key>uuid</key>
+	<string>674F1D52-5E06-4186-B299-97F783B3907C</string>
+</dict>
+</plist>
