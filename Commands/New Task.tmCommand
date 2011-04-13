@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>#!/usr/bin/env ruby
+
+new_task_placeholder = "new task"
+
+line = ENV['TM_CURRENT_LINE'].rstrip
+column = ENV['TM_LINE_INDEX'].to_i
+line_is_empty   = line.strip.empty? || line.strip == '*'
+start_of_row = !line_is_empty &amp;&amp; column==0
+initial_whitespace = line[/^\s*/]
+in_leading_whitespace  = (column &lt;= initial_whitespace.length)
+in_trailing_whitespace = (column &gt;= line.length)
+in_whitespace = in_leading_whitespace || in_trailing_whitespace
+on_blank_task = ENV['TM_SELECTED_TEXT'] == new_task_placeholder
+
+print "\n" if !in_leading_whitespace &amp;&amp; !on_blank_task &amp;&amp; !line_is_empty &amp;&amp; !start_of_row
+print initial_whitespace[column..-1] if in_leading_whitespace
+
+# If the caret is within the line text (not leading/trailing whitespace)
+# then don't offer a placeholder: we assume the user wants to break the list.
+placeholder = in_whitespace ? new_task_placeholder : nil
+if line_is_empty || on_blank_task || start_of_row
+	newline = "\n"
+	#newline[1,0] = '$0'  # Insert caret
+	print newline
+else
+	print "* ${0:#{placeholder}}"
+end
+
+print "\n" if !line_is_empty &amp;&amp; in_leading_whitespace &amp;&amp; !start_of_row
+</string>
+	<key>fallbackInput</key>
+	<string>line</string>
+	<key>input</key>
+	<string>document</string>
+	<key>keyEquivalent</key>
+	<string></string>
+	<key>name</key>
+	<string>New Task</string>
+	<key>output</key>
+	<string>insertAsSnippet</string>
+	<key>scope</key>
+	<string>text.plain.tasks</string>
+	<key>uuid</key>
+	<string>9216E069-0972-4C19-8475-4943B4A51D0B</string>
+</dict>
+</plist>
