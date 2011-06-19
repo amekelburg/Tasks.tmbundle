@@ -31,6 +31,7 @@ else
      col_dif = +1
   end
   column = ENV['TM_LINE_INDEX'].to_i + col_dif
+  column = 0 if column &lt; 0
   #unless column &lt;= $1.length  # If we're past the line-initial whitespace,
   #  column += ($2=='*' ? 2 : 2)  # compensate for different byte counts
   #end

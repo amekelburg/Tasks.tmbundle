@@ -26,16 +26,17 @@ print initial_whitespace[column..-1] if in_leading_whitespace
 # If the caret is within the line text (not leading/trailing whitespace)
 # then don't offer a placeholder: we assume the user wants to break the list.
 placeholder = in_whitespace ? new_task_placeholder : nil
-if line_is_empty || on_blank_task || start_of_row
+if line_is_empty || on_blank_task || start_of_row || line_is_project
 	newline = "\n"
 	print newline
 else
 	line =~ /\s*(\*+)/
 	stars = $1.to_s
+	stars = '*' if stars.strip == ''
 	print "#{stars} ${0:#{placeholder}}"
 end
 
-print "\n" if !line_is_empty &amp;&amp; in_leading_whitespace &amp;&amp; !start_of_row
+print "\n" if !line_is_empty &amp;&amp; in_leading_whitespace &amp;&amp; !start_of_row &amp;&amp; !line_is_project
 </string>
 		<key>fallbackInput</key>
 		<string>line</string>

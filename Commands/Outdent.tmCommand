@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>#!/usr/bin/env ruby
+
+line = ENV['TM_CURRENT_LINE']
+
+# add a star to the beginning
+
+col_dif = 0
+
+if line =~ /^\s*[da]{0,2}\*\*/
+  line = line.gsub(/^(\s*[da]{0,2}\*)/, $1.to_s.chomp('*'))
+  col_dif = -1
+end
+
+column = ENV['TM_LINE_INDEX'].to_i + col_dif
+column = 0 if column &lt; 0
+line[column,0] = '$0'  # Insert caret
+
+print line
+</string>
+	<key>fallbackInput</key>
+	<string>line</string>
+	<key>input</key>
+	<string>selection</string>
+	<key>keyEquivalent</key>
+	<string>^,</string>
+	<key>name</key>
+	<string>Outdent</string>
+	<key>output</key>
+	<string>insertAsSnippet</string>
+	<key>uuid</key>
+	<string>107910ED-55C0-4DC3-9808-BEA65FBED31B</string>
+</dict>
+</plist>

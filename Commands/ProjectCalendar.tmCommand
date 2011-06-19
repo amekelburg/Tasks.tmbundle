@@ -5,26 +5,22 @@
 	<key>beforeRunningCommand</key>
 	<string>nop</string>
 	<key>command</key>
-	<string>#!/usr/bin/ruby
+	<string>#!/usr/bin/env ruby
 
-require  ENV['TM_BUNDLE_SUPPORT'] + '/lib/requirements'
+new_task_placeholder = "new task"
 
-#doc = STDIN.read
+project = ENV['TM_PROJECT_DIRECTORY']
 
-#list = TaskListParser::List.load(doc)
-
-#print list.to_html</string>
+print project</string>
 	<key>input</key>
 	<string>none</string>
 	<key>keyEquivalent</key>
-	<string>^~@P</string>
+	<string>^~@p</string>
 	<key>name</key>
-	<string>Show Calendar</string>
+	<string>ProjectCalendar</string>
 	<key>output</key>
-	<string>showAsHTML</string>
-	<key>scope</key>
-	<string>text.plain.tasks</string>
+	<string>showAsTooltip</string>
 	<key>uuid</key>
-	<string>674F1D52-5E06-4186-B299-97F783B3907C</string>
+	<string>D9FA5DE9-6201-4E01-824B-1E6803BB5C52</string>
 </dict>
 </plist>
