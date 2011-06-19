@@ -41,7 +41,7 @@ print "\n" if !line_is_empty &amp;&amp; in_leading_whitespace &amp;&amp; !start_
 		<key>fallbackInput</key>
 		<string>line</string>
 		<key>keyEquivalent</key>
-		<string></string>
+		<string>$</string>
 	</dict>
 	<key>deleted</key>
 	<array/>

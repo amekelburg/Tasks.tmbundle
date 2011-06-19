@@ -5,17 +5,24 @@
 	<key>beforeRunningCommand</key>
 	<string>nop</string>
 	<key>command</key>
-	<string>#!/usr/bin/ruby
+	<string>#!/usr/local/bin/ruby
 
 require  ENV['TM_BUNDLE_SUPPORT'] + '/lib/requirements'
 
-#doc = STDIN.read
+require  ENV['TM_BUNDLE_SUPPORT'] + '/lib/htmldisplay'
 
-#list = TaskListParser::List.load(doc)
 
-#print list.to_html</string>
+doc = STDIN.read
+
+list = TaskListParser::List.load(doc)
+
+
+
+print CSS
+print list.to_html
+</string>
 	<key>input</key>
-	<string>none</string>
+	<string>document</string>
 	<key>keyEquivalent</key>
 	<string>^~@P</string>
 	<key>name</key>

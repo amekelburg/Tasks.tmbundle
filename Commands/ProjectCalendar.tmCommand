@@ -3,15 +3,99 @@
 <plist version="1.0">
 <dict>
 	<key>beforeRunningCommand</key>
-	<string>nop</string>
+	<string>saveModifiedFiles</string>
 	<key>command</key>
-	<string>#!/usr/bin/env ruby
+	<string>#!/usr/local/bin/ruby
 
-new_task_placeholder = "new task"
+require  ENV['TM_BUNDLE_SUPPORT'] + '/lib/requirements'
 
-project = ENV['TM_PROJECT_DIRECTORY']
+require  ENV['TM_BUNDLE_SUPPORT'] + '/lib/htmldisplay'
 
-print project</string>
+
+project_dir = ENV['TM_PROJECT_DIRECTORY']
+
+
+
+
+def load_from_dir(directory,lists=[])
+	files = Dir.entries(directory)
+	
+	files.each do |fname|
+		fpath = File.join(directory, fname)
+		if fname =~ /\.todo$/
+			unless File.directory?(fpath)
+				File.open(fpath, "r") do |f|
+					lists &lt;&lt; [fname, TaskListParser::List.load(f.read)]
+				end
+			end
+		elsif File.directory?(fpath) &amp;&amp; !(fname =~ /^\./)
+			lists = load_from_dir(fpath,lists)
+		end
+	end
+	return lists
+end
+
+
+lists = load_from_dir(project_dir)
+
+
+
+print CSS
+
+
+consolidated = TaskListParser::List.new
+dates = []
+projs = []
+
+lists.each do |name, list|
+	list.projects.each do |proj|
+		if proj.is_day?
+			date_idx = dates.index {|d| d.name == proj.name}
+			if date_idx
+				proj.tasks.each do |task|
+					unless task.is_a?(TaskListParser::BlankTask)
+						task.name += " (#{name})"
+						dates[date_idx].tasks &lt;&lt; task
+					end
+				end
+			else
+				dates &lt;&lt; proj
+				dates.last.tasks.each do |task|
+					unless task.is_a?(TaskListParser::BlankTask)
+						task.name += " (#{name})"
+					end
+				end
+			end
+		else
+			proj.name += " (#{name})"
+			projs &lt;&lt; proj
+		end
+	end
+end
+
+(dates + projs).each do |p|
+	consolidated.projects &lt;&lt; p
+end
+
+print consolidated.to_html
+
+
+
+#lets create an iCal too!
+
+ical_file_dir = File.join(project_dir,'Calendar')
+
+ical_file_path = File.join(ical_file_dir,'todo.ics')
+
+File.open(ical_file_path, "w+") do |f|
+	f.write consolidated.to_ical
+end
+
+
+
+
+
+</string>
 	<key>input</key>
 	<string>none</string>
 	<key>keyEquivalent</key>
@@ -19,7 +103,7 @@ print project</string>
 	<key>name</key>
 	<string>ProjectCalendar</string>
 	<key>output</key>
-	<string>showAsTooltip</string>
+	<string>showAsHTML</string>
 	<key>uuid</key>
 	<string>D9FA5DE9-6201-4E01-824B-1E6803BB5C52</string>
 </dict>
