@@ -11,6 +11,10 @@ CSS = "
 }
 
 
+.tl-project .tl-project {
+  margin-left:20px;
+}
+
 </style>
 "
 
