@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>name</key>
+	<string>Style: Header Whitespace</string>
+	<key>scope</key>
+	<string>meta.header.leading-whitespace.tasks</string>
+	<key>settings</key>
+	<dict>
+		<key>background</key>
+		<string>#eeeeff</string>
+		<key>fontStyle</key>
+		<string>bold</string>
+		<key>foreground</key>
+		<string>#FFFFFF</string>
+		<key>lineHighlight</key>
+		<string>#aaffaa</string>
+	</dict>
+	<key>uuid</key>
+	<string>CD594BBB-76DF-4026-91C0-4DA6C923756C</string>
+</dict>
+</plist>

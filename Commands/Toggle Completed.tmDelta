@@ -18,21 +18,19 @@ if ENV['TM_SELECTED_TEXT']
   end
   print '${0:' + toggled_text + '}'  # Wrap in selection
 else
-  line = ENV['TM_CURRENT_LINE'].gsub(/^(\s*)([d\*s]{1,2})/u) do
-	new_sym = ''
-	case $2
-		when '*'
-		 	new_sym = 'd'
-		when 'd'
-			new_sym = '*'
-		when 's*'
-			new_sym = 'ds'
-		when 'ds'
-			new_sym = 's*'
-	end
-	$1 + new_sym   #($2=='*' ? 'd' : '*') }
+  line = ENV['TM_CURRENT_LINE']
+  col_dif = 0
+  if line =~ /^\s*[da]{2}/
+	line = line.gsub(/^(\s*)[da]{2}/, $1.to_s+'a')
+     col_dif = -1
+  elsif line =~ /^\s*d/u
+	line = line.gsub(/^(\s*)d/, $1.to_s)
+     col_dif = -1
+  elsif line =~ /^(\s*)([a\*])/
+	line = line.gsub(/^(\s*)([a\*])/, $1.to_s+'d'+$2.to_s)
+     col_dif = +1
   end
-  column = ENV['TM_LINE_INDEX'].to_i
+  column = ENV['TM_LINE_INDEX'].to_i + col_dif
   #unless column &lt;= $1.length  # If we're past the line-initial whitespace,
   #  column += ($2=='*' ? 2 : 2)  # compensate for different byte counts
   #end

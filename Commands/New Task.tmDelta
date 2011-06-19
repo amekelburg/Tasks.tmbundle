@@ -11,7 +11,8 @@ new_task_placeholder = "new task"
 
 line = ENV['TM_CURRENT_LINE'].rstrip
 column = ENV['TM_LINE_INDEX'].to_i
-line_is_empty   = line.strip.empty? || line.strip == '*'
+line_is_empty   = line.strip.empty? || line.strip == '*' || line.strip == '-'
+line_is_project = line.strip =~ /^(\s*)((.+)(:)\s*$\n?)$/
 start_of_row = !line_is_empty &amp;&amp; column==0
 initial_whitespace = line[/^\s*/]
 in_leading_whitespace  = (column &lt;= initial_whitespace.length)
@@ -27,10 +28,11 @@ print initial_whitespace[column..-1] if in_leading_whitespace
 placeholder = in_whitespace ? new_task_placeholder : nil
 if line_is_empty || on_blank_task || start_of_row
 	newline = "\n"
-	#newline[1,0] = '$0'  # Insert caret
 	print newline
 else
-	print "* ${0:#{placeholder}}"
+	line =~ /\s*(\*+)/
+	stars = $1.to_s
+	print "#{stars} ${0:#{placeholder}}"
 end
 
 print "\n" if !line_is_empty &amp;&amp; in_leading_whitespace &amp;&amp; !start_of_row

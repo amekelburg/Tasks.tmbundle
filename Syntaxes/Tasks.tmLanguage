@@ -11,9 +11,9 @@
 		<string>todolist</string>
 	</array>
 	<key>foldingStartMarker</key>
-	<string>^(\s*)((.+)(:)\s*$\n?)</string>
+	<string>^[^\t\*]+:\s*$\n?</string>
 	<key>foldingStopMarker</key>
-	<string>END</string>
+	<string>^-$</string>
 	<key>keyEquivalent</key>
 	<string>^~T</string>
 	<key>name</key>
@@ -126,7 +126,7 @@
 				<key>1</key>
 				<dict>
 					<key>name</key>
-					<string>meta.leading-whitespace.tasks</string>
+					<string>meta.header.leading-whitespace.tasks</string>
 				</dict>
 				<key>2</key>
 				<dict>
@@ -145,7 +145,7 @@
 				</dict>
 			</dict>
 			<key>match</key>
-			<string>^(\s*)((.+)(:)\s*$\n?)</string>
+			<string>(\s*)((.+)(:)\s*$\n?)</string>
 			<key>name</key>
 			<string>meta.header-line.tasks</string>
 		</dict>
